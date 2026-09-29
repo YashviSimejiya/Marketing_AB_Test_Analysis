@@ -2,11 +2,13 @@
 
 ## 📊 Project Overview
 
-This project analyzes the results of a marketing A/B experiment to determine whether an advertising treatment improved user conversion compared with a PSA control group.
+This project analyzes the results of a marketing A/B experiment to evaluate whether an advertising treatment improved user conversion compared with a PSA control group.
 
-The analysis goes beyond a simple conversion-rate comparison by evaluating:
+The analysis combines **exploratory data analysis, statistical inference, experiment evaluation, and business interpretation** to understand both the statistical and practical impact of the treatment.
 
-* Conversion performance
+### Key areas analyzed
+
+* Conversion rates
 * Absolute and relative lift
 * Statistical significance
 * Confidence intervals
@@ -18,19 +20,17 @@ The analysis goes beyond a simple conversion-rate comparison by evaluating:
 * Day-level treatment consistency
 * Ad-exposure patterns
 
-The goal is to distinguish **statistical significance from practical business impact** and provide a data-driven interpretation of the experiment.
+The goal is to distinguish **statistical significance from practical business impact** and translate experimental results into actionable insights.
 
 ---
 
 ## 🎯 Business Problem
 
-A marketing team wants to understand whether showing users the advertising treatment leads to higher conversion than showing the PSA control.
+A marketing team wants to determine whether showing users an advertising treatment leads to higher conversion compared with showing a PSA control.
 
-The key business question is:
+**Key business question:**
 
-> **Did the advertising treatment generate a meaningful improvement in conversion compared with the control group?**
-
-The analysis evaluates both whether a difference exists statistically and whether the observed difference is meaningful from a business perspective.
+> Did the advertising treatment generate a meaningful improvement in conversion compared with the control group?
 
 ---
 
@@ -43,7 +43,7 @@ The dataset contains user-level records from a marketing experiment, including:
 * Day of the week
 * Total number of ads seen
 
-The experiment contains approximately **588,101 users**.
+The dataset contains approximately **588,101 users**.
 
 ### Experimental Allocation
 
@@ -52,37 +52,35 @@ The experiment contains approximately **588,101 users**.
 | Ad    | 564,577 |  ~96% |
 | PSA   |  23,524 |   ~4% |
 
-The experiment therefore has a strongly unequal treatment/control allocation rather than a 50/50 split.
+The experiment therefore has a highly unequal treatment/control allocation rather than a 50/50 split.
 
 ---
 
 ## 🔬 Methodology
 
-The analysis was performed using Python and statistical methods appropriate for comparing two independent conversion proportions.
-
-### 1. Exploratory Analysis
+### 1. Exploratory Data Analysis
 
 The dataset was examined to understand:
 
 * Group sizes
-* Conversion counts
-* Conversion rates
+* Conversion counts and rates
 * Distribution across days
-* Ad exposure patterns
+* Ad-exposure patterns
+* Treatment/control allocation
 
 ### 2. A/B Test
 
-The primary metric was the conversion rate.
+The primary metric was **conversion rate**.
 
-The null hypothesis was:
+**Null hypothesis (H₀):**
 
-**H₀:** The conversion rates of the advertising and PSA groups are equal.
+> The conversion rates of the advertising and PSA groups are equal.
 
-**H₁:** The conversion rates are different.
+**Alternative hypothesis (H₁):**
 
-A **two-sided two-proportion z-test** was used with:
+> The conversion rates of the advertising and PSA groups are different.
 
-* Significance level: α = 0.05
+A **two-sided two-proportion z-test** was used with a significance level of **α = 0.05**.
 
 ### 3. Confidence Interval
 
@@ -90,7 +88,7 @@ A 95% confidence interval was calculated for the difference in conversion rates 
 
 ### 4. Effect Size
 
-The analysis calculated:
+The analysis evaluated:
 
 * Absolute lift
 * Relative lift
@@ -100,24 +98,24 @@ The analysis calculated:
 
 ### 5. Statistical Power & MDE
 
-Power analysis was performed using Cohen's h to evaluate the experiment's sensitivity to different effect sizes.
+Power analysis was performed to evaluate the experiment's ability to detect meaningful effects.
 
-The minimum detectable effect was calculated for:
+The minimum detectable effect was estimated using:
 
 * α = 0.05
 * 80% statistical power
 * Two-sided testing
-* Observed treatment/control allocation ratio
+* Observed treatment/control allocation
 
 ### 6. Experiment Quality Checks
 
-Additional analyses examined:
+Additional analysis examined:
 
 * Treatment/control allocation imbalance
 * Conversion consistency across days
 * Relationship between ad exposure and conversion
 
-The ad-exposure analysis is treated as **observational/descriptive**, because exposure frequency was not itself randomly assigned.
+The ad-exposure analysis is treated as **observational/descriptive**, because exposure frequency itself was not randomly assigned.
 
 ---
 
@@ -125,21 +123,17 @@ The ad-exposure analysis is treated as **observational/descriptive**, because ex
 
 ### Conversion Performance
 
-| Metric              |                               Result |
-| ------------------- | -----------------------------------: |
-| PSA conversion rate |                           **1.785%** |
-| Ad conversion rate  |                           **2.555%** |
-| Absolute lift       |         **+0.769 percentage points** |
-| Relative lift       |                          **+43.09%** |
-| 95% CI              | **[0.595, 0.943] percentage points** |
+| Metric              |                Result |
+| ------------------- | --------------------: |
+| PSA conversion rate |            **1.785%** |
+| Ad conversion rate  |            **2.555%** |
+| Absolute lift       |         **+0.769 pp** |
+| Relative lift       |           **+43.09%** |
+| 95% CI              | **[0.595, 0.943] pp** |
 
-The advertising group had a higher observed conversion rate than the PSA group.
+The advertising group recorded a higher observed conversion rate than the PSA group.
 
----
-
-## 📊 Statistical Test
-
-The two-proportion z-test produced:
+### Statistical Test
 
 | Metric      |            Result |
 | ----------- | ----------------: |
@@ -162,24 +156,22 @@ The 95% confidence interval for the treatment effect is entirely above zero.
 
 The standardized effect size is relatively small, while the observed business-facing difference is approximately **0.769 percentage points**.
 
-This distinction is important: with a very large sample, a relatively modest conversion difference can be estimated with high statistical precision.
+This illustrates an important analytical distinction: with a very large sample, a relatively modest conversion difference can be estimated with high statistical precision.
 
 ---
 
 ## ⚡ Statistical Power & MDE
 
-The observed effect corresponds to a Cohen's h of approximately **0.053**.
+The observed treatment effect corresponds to a Cohen's h of approximately **0.053**.
 
-The estimated statistical power for detecting the observed effect was approximately:
-
-**100%**
+The estimated statistical power for detecting the observed effect was approximately **100%** under the specified assumptions.
 
 At 80% statistical power, the estimated minimum detectable effect corresponded to approximately:
 
 * **14.3% relative lift**
 * **0.255 percentage points** above the baseline conversion rate
 
-This indicates that the experiment had sufficient statistical sensitivity to detect effects smaller than the observed relative improvement.
+The observed relative improvement was larger than this estimated detection threshold.
 
 ---
 
@@ -190,9 +182,9 @@ The observed allocation was highly imbalanced:
 * **Ad:** ~96%
 * **PSA:** ~4%
 
-A hypothetical 50/50 allocation would have placed approximately 294,051 users in each group.
+A hypothetical 50/50 allocation would have placed approximately **294,051 users** in each group.
 
-The unequal allocation does not prevent the two-proportion test from being performed, but it is important when interpreting experiment efficiency and precision. The smaller PSA group provides less information for estimating the control conversion rate.
+The unequal allocation does not prevent the two-proportion test from being performed, but it is important when evaluating experiment efficiency and precision because the smaller PSA group provides less information for estimating the control conversion rate.
 
 ---
 
@@ -200,11 +192,11 @@ The unequal allocation does not prevent the two-proportion test from being perfo
 
 Conversion rates were compared across the seven days represented in the dataset.
 
-The advertising group had a higher observed conversion rate than the PSA group on each day.
+The advertising group had a higher observed conversion rate than the PSA group on **each of the seven days**.
 
-This provides **directional consistency** with the overall treatment effect.
+This provides directional consistency with the overall treatment effect.
 
-However, day-level comparisons are supporting evidence rather than independent replications of the experiment.
+However, these day-level comparisons should be treated as supporting evidence rather than independent replications of the experiment.
 
 ---
 
@@ -212,7 +204,7 @@ However, day-level comparisons are supporting evidence rather than independent r
 
 Conversion rates were also examined across observed ad-exposure bands.
 
-Conversion increased substantially across the exposure bands, with the highest observed conversion rates among users who saw the most ads.
+Conversion increased substantially across the observed exposure groups, with the highest conversion rates among users who saw the most ads.
 
 However, this analysis is **observational rather than causal**.
 
@@ -222,15 +214,15 @@ Users were not randomly assigned to different ad-exposure frequencies, so the an
 
 ## 💡 Business Interpretation
 
-The experiment shows a statistically detectable difference in conversion between the advertising and PSA groups.
+The experiment provides statistical evidence of a difference in conversion between the advertising and PSA groups.
 
 The observed difference was:
 
-> **+0.769 percentage points, corresponding to approximately +43.09% relative lift.**
+> **+0.769 percentage points**, corresponding to approximately **+43.09% relative lift**.
 
 However, statistical significance alone should not determine a business rollout decision.
 
-A complete business decision should also consider:
+A complete business assessment should also consider:
 
 * Campaign cost
 * Incremental revenue
@@ -239,9 +231,9 @@ A complete business decision should also consider:
 * Ad fatigue
 * Long-term retention
 * Potential diminishing returns
-* Whether the observed conversion lift translates into sufficient economic value
+* Whether the conversion improvement generates sufficient economic value
 
-The ad-exposure analysis should not be used as evidence that simply increasing ad frequency will cause higher conversion.
+The ad-exposure analysis should not be interpreted as evidence that simply increasing ad frequency will cause higher conversion.
 
 ---
 
@@ -249,9 +241,9 @@ The ad-exposure analysis should not be used as evidence that simply increasing a
 
 ### 1. Highly Unequal Group Allocation
 
-The experiment contains approximately 96% advertising users and 4% PSA users.
+Approximately 96% of users were in the advertising group and 4% were in the PSA group.
 
-The smaller control group limits the efficiency of the experimental comparison.
+The smaller control group reduces the efficiency of the experimental comparison.
 
 ### 2. Large Sample Size
 
@@ -267,36 +259,41 @@ Therefore, the relationship between exposure and conversion should not be interp
 
 ### 4. Conversion Is the Primary Outcome
 
-The analysis focuses on conversion and does not directly evaluate downstream metrics such as revenue, retention, customer lifetime value, or profitability.
+The analysis focuses on conversion and does not directly evaluate downstream metrics such as:
+
+* Revenue
+* Retention
+* Customer lifetime value
+* Profitability
 
 ---
 
 ## 🛠️ Technologies Used
 
-* **Python**
-* **Pandas**
-* **NumPy**
-* **SciPy**
-* **Statsmodels**
-* **Matplotlib**
-* **Jupyter Notebook**
+* Python
+* Pandas
+* NumPy
+* SciPy
+* Statsmodels
+* Matplotlib
+* Jupyter Notebook
 
 ---
 
 ## 📂 Project Structure
 
 ```text
-marketing-ab-test-analysis/
+Marketing_AB_Test_Analysis/
 │
 ├── data/
-│   └── marketing_ab_test.csv
+│   └── raw/
+│       └── marketing_AB.csv
 │
 ├── notebooks/
 │   └── marketing_ab_test_analysis.ipynb
 │
-├── README.md
-│
-└── requirements.txt
+├── .gitignore
+└── README.md
 ```
 
 ---
@@ -308,10 +305,10 @@ marketing-ab-test-analysis/
 3. The corresponding relative lift was approximately **43.09%**.
 4. The 95% confidence interval for the treatment effect was **[0.595, 0.943] percentage points**.
 5. The two-proportion z-test produced a **z-statistic of 7.37** and a **p-value of 1.705 × 10⁻¹³**.
-6. The observed treatment effect was directionally consistent across the seven days represented in the dataset.
-7. The experiment had approximately **100% estimated power** for the observed effect under the specified assumptions.
-8. The relationship between ad exposure and conversion is descriptive and **should not be interpreted as causal**.
-9. Business rollout decisions should consider **incremental economic value and user impact**, not statistical significance alone.
+6. The advertising group had a higher observed conversion rate across all seven days.
+7. The experiment had high estimated statistical power for the observed effect under the specified assumptions.
+8. The relationship between ad exposure and conversion is **descriptive, not causal**.
+9. Business decisions should consider economic impact and user experience alongside statistical evidence.
 
 ---
 
@@ -329,6 +326,6 @@ This project demonstrates practical skills in:
 * Minimum detectable effect
 * Experimental design evaluation
 * Data visualization
-* Business interpretation
 * Python-based data analysis
+* Business interpretation
 * Translating statistical results into business insights
